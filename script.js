@@ -4,12 +4,14 @@ const API_KEYS = {
   gif: "blZBBX96YFZI1VZ6wLWPZn0JcZSDCP1x",
 };
 
-const weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=Drammen&APPID=${API_KEYS.weather}`;
+let weatherURL = `https://api.openweathermap.org/data/2.5/weather?APPID=${API_KEYS.weather}&q=Drammen`;
 let gifURL = `https://api.giphy.com/v1/gifs/translate?api_key=${API_KEYS.gif}&s=clouds`;
+let searchTerm = "";
 let condition = "";
 
 // Query selectors
-const gif = document.querySelector("#gif");
+const searchField = document.querySelector("#search-field");
+const searchButton = document.querySelector("#search-button");
 const informationCard = document.querySelector("#information-card");
 
 // Helper functions
@@ -39,20 +41,35 @@ async function getGif() {
   return result;
 }
 
-function changeSearchTerm(url, searchTerm) {
-  return `${url.split("&s=")[0]}&s=${searchTerm}`;
+function changeSearchTerm(url, searchKey, searchTerm) {
+  return `${url.split(`${searchKey}=`)[0]}${searchKey}=${searchTerm}`;
 }
 
-getWeatherInformation().then((obj) => {
-  gifURL = changeSearchTerm(gifURL, obj.condition);
-  informationCard.innerHTML = `
+function main() {
+  getWeatherInformation().then((obj) => {
+    gifURL = changeSearchTerm(gifURL, "s", obj.condition);
+
+    informationCard.innerHTML = `
   <h1>${obj.location}</h1>
   <p>Condition: ${obj.condition}</p>
   <p>Description: ${obj.description}</p>
   <p>Temperature: ${obj.temp}</p>
   `;
 
-  getGif().then((obj) => {
-    document.body.style.backgroundImage = `url("${obj.data.images.original.url}")`;
+    getGif().then((obj) => {
+      document.body.style.backgroundImage = `url("${obj.data.images.original.url}")`;
+    });
   });
+}
+
+// Event listeners
+searchField.addEventListener("input", (e) => {
+  weatherURL = changeSearchTerm(weatherURL, "q", e.target.value);
 });
+
+searchButton.addEventListener("click", () => {
+  searchField.value = "";
+  main();
+});
+
+main();
