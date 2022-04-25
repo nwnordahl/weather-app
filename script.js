@@ -22,6 +22,8 @@ async function getWeatherInformation() {
   });
   const result = await response.json();
 
+  console.log(result);
+
   return {
     location: result.name,
     temp: result.main.temp,
@@ -29,6 +31,7 @@ async function getWeatherInformation() {
     max_temp: result.main.temp_max,
     weatherCondition: result.weather[0].main,
     description: result.weather[0].description,
+    icon: result.weather[0].icon,
   };
 }
 
@@ -50,7 +53,7 @@ function main() {
   getWeatherInformation().then((obj) => {
     gifURL = changeSearchTerm(gifURL, "s", obj.weatherCondition);
 
-    weatherIcon.src = `http://openweathermap.org/img/w/10d.png`;
+    weatherIcon.src = `http://openweathermap.org/img/w/${obj.icon}.png`;
 
     informationCard.innerHTML = `
   <h1>${obj.location}</h1>
