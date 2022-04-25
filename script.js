@@ -7,7 +7,7 @@ const API_KEYS = {
 let weatherURL = `https://api.openweathermap.org/data/2.5/weather?APPID=${API_KEYS.weather}&q=Drammen`;
 let gifURL = `https://api.giphy.com/v1/gifs/translate?api_key=${API_KEYS.gif}&s=clouds`;
 let searchTerm = "";
-let condition = "";
+let weatherCondition = "";
 
 // Query selectors
 const searchField = document.querySelector("#search-field");
@@ -26,7 +26,7 @@ async function getWeatherInformation() {
     temp: result.main.temp,
     min_temp: result.main.temp_min,
     max_temp: result.main.temp_max,
-    condition: result.weather[0].main,
+    weatherCondition: result.weather[0].main,
     description: result.weather[0].description,
   };
 }
@@ -47,11 +47,11 @@ function changeSearchTerm(url, searchKey, searchTerm) {
 
 function main() {
   getWeatherInformation().then((obj) => {
-    gifURL = changeSearchTerm(gifURL, "s", obj.condition);
+    gifURL = changeSearchTerm(gifURL, "s", obj.weatherCondition);
 
     informationCard.innerHTML = `
   <h1>${obj.location}</h1>
-  <p>Condition: ${obj.condition}</p>
+  <p>Condition: ${obj.weatherCondition}</p>
   <p>Description: ${obj.description}</p>
   <p>Temperature: ${obj.temp}</p>
   `;
@@ -65,6 +65,13 @@ function main() {
 // Event listeners
 searchField.addEventListener("input", (e) => {
   weatherURL = changeSearchTerm(weatherURL, "q", e.target.value);
+});
+
+searchField.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    searchField.value = "";
+    main();
+  }
 });
 
 searchButton.addEventListener("click", () => {
