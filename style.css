@@ -1,3 +1,10 @@
+/* Basic styling */
+:root {
+  --primary-color: #023e8a;
+  --primary-color-dark: #03045e;
+  --secondary-color: #caf0f8;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -11,11 +18,71 @@ body {
   justify-content: center;
   align-items: center;
   background-image: url();
+  background-size: 100% 100%;
 }
 
-#information-card {
-  background-color: white;
+img {
+  height: 100%;
+}
+
+/* SEARCH */
+#search-container {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 7px;
+}
+
+/* Search field */
+#search-container #search-field {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: 0;
+  background-color: whitesmoke;
+  color: var(--primary-color-dark);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+#search-container #search-field:hover,
+#search-container #search-field:focus {
+  transform: scale(1.02);
+  outline: none;
+}
+
+/* Search button */
+#search-container #search-button {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 25px;
+  border-radius: 8px;
+  border: 0;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+#search-container #search-button:hover,
+#search-container #search-button:focus {
+  transform: scale(1.03);
+  outline: none;
+}
+
+/* General classes */
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: whitesmoke;
   padding: 20px 50px;
   border-radius: 6px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }

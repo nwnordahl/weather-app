@@ -12,6 +12,7 @@ let weatherCondition = "";
 // Query selectors
 const searchField = document.querySelector("#search-field");
 const searchButton = document.querySelector("#search-button");
+const weatherIcon = document.querySelector("#weather-icon img");
 const informationCard = document.querySelector("#information-card");
 
 // Helper functions
@@ -48,6 +49,8 @@ function changeSearchTerm(url, searchKey, searchTerm) {
 function main() {
   getWeatherInformation().then((obj) => {
     gifURL = changeSearchTerm(gifURL, "s", obj.weatherCondition);
+
+    weatherIcon.src = `http://openweathermap.org/img/w/10d.png`;
 
     informationCard.innerHTML = `
   <h1>${obj.location}</h1>
